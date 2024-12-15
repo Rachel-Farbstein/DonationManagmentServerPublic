@@ -1,0 +1,31 @@
+name: Sync from Private to Public
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Checkout private repository
+        env:
+          GITHUB_TOKEN: ${{ secrets.PRIVATE_REPO_TOKEN }}
+        run: |
+          git remote add private https://<GITHUB_TOKEN>@github.com/username/pDonationManagmentServer.git
+          git fetch private
+          git checkout private/main -- .gitignore
+          git pull private main
+
+      - name: Push to public repository
+        env:
+          GITHUB_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
+        run: |
+          git config --global user.name "Rachel-Farbstein"
+          git config --global user.email "rachely7331@gmail.com"
+          git remote add public https://<GITHUB_TOKEN>@github.com/Rachel-Farbstein/DonationManagmentServerPublic.git
+          git push -u public main --force
