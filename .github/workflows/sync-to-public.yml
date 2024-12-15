@@ -14,7 +14,7 @@ jobs:
 
       - name: Checkout private repository
         env:
-          GITHUB_TOKEN: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.DONATIONS_SERVER_PRIVATE_REPO_TOKEN }}
         run: |
           git remote add private https://<GITHUB_TOKEN>@github.com/username/pDonationManagmentServer.git
           git fetch private
@@ -23,7 +23,7 @@ jobs:
 
       - name: Push to public repository
         env:
-          GITHUB_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.DONATIONS_SERVER_PUBLIC_REPO_TOKEN }}
         run: |
           git config --global user.name "Rachel-Farbstein"
           git config --global user.email "rachely7331@gmail.com"
